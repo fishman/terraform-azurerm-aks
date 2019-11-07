@@ -20,6 +20,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     vm_size         = var.agents_size
     os_type         = "Linux"
     os_disk_size_gb = 50
+    vnet_subnet_id  = var.subnet_id
   }
 
   service_principal {
@@ -31,6 +32,18 @@ resource "azurerm_kubernetes_cluster" "main" {
     oms_agent {
       enabled                    = true
       log_analytics_workspace_id = var.log_analytics_workspace_id
+    }
+  }
+
+  # Enable Advanced Networking
+  dynamic "network_profile" {
+    for_each = var.network_profiles
+
+    content {
+      network_plugin     = network_profile.network_plugin
+      service_cidr       = network_profile.service_cidr
+      dns_service_ip     = network_profile.dns_service_ip
+      docker_bridge_cidr = network_profile.docker_bridge_cidr
     }
   }
 

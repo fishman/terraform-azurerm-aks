@@ -49,3 +49,11 @@ variable "service_principal_client_secret" {
   description = "The Client Secret of the Service Principal assigned to Kubernetes"
 }
 
+variable "subnet_id" {
+  type    = string
+  default = null
+}
+
+variable "network_profiles" {
+  default = {}
+}

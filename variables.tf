@@ -50,3 +50,11 @@ variable "public_ssh_key" {
   default     = ""
 }
 
+variable "subnet_id" {
+  type    = string
+  default = null
+}
+
+variable "network_profiles" {
+  default = {}
+}

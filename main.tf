@@ -21,6 +21,8 @@ module "kubernetes" {
   service_principal_client_id     = var.CLIENT_ID
   service_principal_client_secret = var.CLIENT_SECRET
   log_analytics_workspace_id      = module.log_analytics_workspace.id
+  subnet_id                       = var.subnet_id
+  network_profiles                = var.network_profiles
 }
 
 module "log_analytics_workspace" {
