@@ -38,3 +38,10 @@ output "location" {
   value = azurerm_kubernetes_cluster.main.location
 }
 
+output "kube_admin_config_raw" {
+  value = azurerm_kubernetes_cluster.main.kube_admin_config_raw
+}
+
+output "kube_config_raw" {
+  value = azurerm_kubernetes_cluster.main.kube_config_raw
+}

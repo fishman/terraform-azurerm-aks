@@ -30,3 +30,10 @@ output "location" {
   value = module.kubernetes.location
 }
 
+output "kube_admin_config_raw" {
+  value = module.kubernetes.kube_admin_config_raw
+}
+
+output "kube_config_raw" {
+  value = module.kubernetes.kube_config_raw
+}
