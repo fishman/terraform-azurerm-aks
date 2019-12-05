@@ -56,5 +56,5 @@ variable "subnet_id" {
 }
 
 variable "network_profiles" {
-  default = {}
+  default = []
 }
