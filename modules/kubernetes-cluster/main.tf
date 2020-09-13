@@ -14,11 +14,10 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
-  agent_pool_profile {
+  default_node_pool {
     name            = "nodepool"
-    count           = var.agents_count
+    node_count      = var.agents_count
     vm_size         = var.agents_size
-    os_type         = "Linux"
     os_disk_size_gb = 50
     vnet_subnet_id  = var.subnet_id
   }
@@ -29,6 +28,11 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   addon_profile {
+    # This is the default
+    kube_dashboard {
+      enabled = true
+    }
+
     oms_agent {
       enabled                    = true
       log_analytics_workspace_id = var.log_analytics_workspace_id
@@ -37,7 +41,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   # Enable Advanced Networking
   dynamic "network_profile" {
-    for_each = [for s in var.network_profiles: {
+    for_each = [for s in var.network_profiles : {
       network_plugin     = s.network_plugin
       service_cidr       = s.service_cidr
       dns_service_ip     = s.dns_service_ip
@@ -52,6 +56,11 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      default_node_pool
+    ]
+  }
+
   tags = var.tags
 }
-
